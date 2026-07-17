@@ -3,14 +3,12 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# ─── Page Config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Customer Churn Predictor",
     page_icon="📡",
     layout="centered"
 )
 
-# ─── Load Artifacts ────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_artifacts():
     model  = joblib.load("customer_churn_model.pkl")     # your Random Forest pkl
@@ -20,7 +18,6 @@ def load_artifacts():
 
 model, scaler, cols = load_artifacts()
 
-# ─── Preprocessing ─────────────────────────────────────────────────────────────
 def preprocess(tenure, senior_citizen, partner, dependents, paperless_billing,
                multiple_lines, internet_service, online_security, online_backup,
                device_protection, tech_support, streaming_tv, streaming_movies,
@@ -65,7 +62,6 @@ def preprocess(tenure, senior_citizen, partner, dependents, paperless_billing,
 
     return df_input
 
-# ─── UI ────────────────────────────────────────────────────────────────────────
 st.title("📡 Customer Churn Prediction")
 st.caption("Predict whether a customer is likely to churn based on their profile.")
 st.divider()
@@ -112,7 +108,6 @@ with col5:
 
 st.divider()
 
-# ─── Predict ───────────────────────────────────────────────────────────────────
 if st.button("Predict Churn", use_container_width=True, type="primary"):
     input_df = preprocess(
         tenure, senior_citizen, partner, dependents, paperless_billing,
@@ -137,6 +132,5 @@ if st.button("Predict Churn", use_container_width=True, type="primary"):
     st.markdown("**Churn Probability**")
     st.progress(float(probability))
 
-# ─── Disclaimer ────────────────────────────────────────────────────────────────
 st.divider()
 st.caption("Educational project only. Not intended for production business decisions without validation.")
